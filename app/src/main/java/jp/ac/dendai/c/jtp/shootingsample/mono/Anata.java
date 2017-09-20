@@ -46,7 +46,7 @@ public class Anata extends AbstractShooter implements Mikata {
         p.setY(p.getY()+y);
     }
 
-    public void setShootperiod(boolean a){
-        shootperiod = a? 50:100;
+    public void powerUp(boolean a){
+        shootperiod -= 10;
     }
 }

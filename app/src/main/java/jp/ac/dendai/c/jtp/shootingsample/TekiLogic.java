@@ -3,6 +3,7 @@ import android.content.Context;
 
 import java.util.Random;
 
+import jp.ac.dendai.c.jtp.shootingsample.mono.BossTeki;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mono;
 import jp.ac.dendai.c.jtp.shootingsample.mono.RareTeki;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Teki;
@@ -19,11 +20,14 @@ public class TekiLogic {
         list.add(createTeki());
     }
     private Mono createTeki() {
-        if(rand.nextInt(10) != 0) {
-            return new Teki(context, rand.nextInt(1000), 30);
+        if(rand.nextInt(20) == 0){
+            return new BossTeki(context, 0, 0);
+        }
+        else if(rand.nextInt(10) == 0) {
+            return new RareTeki(context, rand.nextInt(1000), 30);
         }
         else {
-            return new RareTeki(context, rand.nextInt(1000), 30);
+            return new Teki(context, rand.nextInt(1000), 30);
         }
     }
     public void step(double tstep, int width, int height) {
