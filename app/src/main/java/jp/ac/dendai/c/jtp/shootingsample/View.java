@@ -26,6 +26,7 @@ public class View extends SurfaceView {
     private final Object lock;
     Stick stick;
 
+
     public View(Context context, Point p) {
         super(context);
         this.context = context;
@@ -33,6 +34,13 @@ public class View extends SurfaceView {
         height = p.y;
         lock = new Object();
     }
+//    public View(Context context, int width, int height) {
+//        super(context);
+//        this.context = context;
+//        this.width = width;
+//        this.height = height;
+//        lock = new Object();
+//    }
     public void init() {
         drawList = new DrawList();
         score = new Score();
@@ -88,6 +96,7 @@ public class View extends SurfaceView {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+//        System.out.println("waowao");
 //        switch (event.getAction()) {
 //            case MotionEvent.ACTION_DOWN:
 //                mikata.setDirection(event, width, height);
@@ -142,9 +151,10 @@ public class View extends SurfaceView {
                 synchronized (lock) {
                     drawList.update();
                 }
-                if (tekiList.atari(mikata.getRect()) != null) {
+                if (tekiList.atari(mikata.getRect()) != null) { //自分への衝突判定
                     drawList.stop();
                     shutdown = true;
+//                    new Restart(context, width, height);
                     break;
                 }
                 try {

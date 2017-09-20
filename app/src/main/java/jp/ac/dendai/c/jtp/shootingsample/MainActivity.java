@@ -55,4 +55,8 @@ public class MainActivity extends ActionBarActivity {
     public static MainActivity getInstance() {
         return instance;
     }
+
+    public void SetContentView(View view){
+        setContentView(view);
+    }
 }
