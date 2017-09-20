@@ -2,7 +2,6 @@ package jp.ac.dendai.c.jtp.shootingsample;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
-import android.os.Debug;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Haikei;
@@ -25,6 +24,8 @@ public class View extends SurfaceView {
     private Score score;
     private TekiLogic tekiLogic;
     private final Object lock;
+    Stick stick;
+
     public View(Context context, Point p) {
         super(context);
         this.context = context;
@@ -53,6 +54,12 @@ public class View extends SurfaceView {
         destroyThread(moveThread);
         drawThread = new DrawThread();
         moveThread = new MoveThread();
+
+        Controller controller = new Controller();
+
+        stick = controller.getStick(0);
+
+        setOnTouchListener(controller);
     }
     public void start(){
         shutdown = false;
@@ -73,6 +80,7 @@ public class View extends SurfaceView {
     private void draw() {
         synchronized (lock) {
             Canvas canvas = getHolder().lockCanvas();
+            setPosition();
             if (canvas == null) return;
             drawList.draw(canvas);
             getHolder().unlockCanvasAndPost(canvas); // 描画を終了
@@ -80,20 +88,20 @@ public class View extends SurfaceView {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mikata.setDirection(event, width, height);
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                mikata.stop();
-                if (shutdown) {
-                    init();
-                    start();
-                }
-                performClick();
-                break;
-        }
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                mikata.setDirection(event, width, height);
+//            case MotionEvent.ACTION_MOVE:
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                mikata.stop();
+//                if (shutdown) {
+//                    init();
+//                    start();
+//                }
+//                performClick();
+//                break;
+//        }
         return true;
     }
     @Override
@@ -101,6 +109,11 @@ public class View extends SurfaceView {
         super.performClick();
         return true;
     }
+    public void setPosition()
+    {
+        mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
+    }
+
     class MoveThread extends Thread {
         @Override
         public void run() {
@@ -117,7 +130,8 @@ public class View extends SurfaceView {
                 }
                 previous = now;
 
-                for (Shootable s : tamaList) {
+                score.add(1);
+                for (Shootable s : tamaList) { //敵の死の判定
                     Mono m = tekiList.atari(s.getRect());
                     if (m != null) {
                         score.add(m.getScore());

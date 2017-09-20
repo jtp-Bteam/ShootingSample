@@ -1,25 +1,31 @@
 package jp.ac.dendai.c.jtp.shootingsample.mono;
+
 import android.content.Context;
-import android.util.Log;
 
 import java.util.Random;
 
 import jp.ac.dendai.c.jtp.shootingsample.DisplaySizeCheck;
+import jp.ac.dendai.c.jtp.shootingsample.MainActivity;
 import jp.ac.dendai.c.jtp.shootingsample.R;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
-public class Teki extends AbstractMono {
-    private static final int[] ids = {R.drawable.teki1, R.drawable.teki2};
+
+/**
+ * Created by xxx on 2017/09/20.
+ */
+
+public class RareTeki extends AbstractMono{
+    private static final int[] ids = {R.drawable.hiragana_34_te, R.drawable.hiragana_12_ki};
     private int dpindex;
     Random rand = new Random();
-    private final int x = (int)(3 - (rand.nextInt(7)) * DisplaySizeCheck.x);
-    private final int y = (int)(5 - (rand.nextInt(3)) * DisplaySizeCheck.y);
-    private Vect[] dps = {new Vect(x, y), new Vect(x, y)};
-    private double dpcycle = 0;//200 + rand.nextInt(300); //500から1000の間にしてない
+    private final int x = (int)(3 * DisplaySizeCheck.x);
+    private final int y = (int)(20 * DisplaySizeCheck.y);
+    private Vect[] dps = {new Vect(x, y), new Vect(-x, y)};
+    private double dpcycle = 10;//200 + rand.nextInt(300); //500から1000の間にしてない
     private double dpcounter;
-    public Teki(Context context) {
+    public RareTeki(Context context) {
         super(context, ids);
     }
-    public Teki(Context context, int x, int y) {
+    public RareTeki(Context context, int x, int y) {
         super(context, ids);
         set(x, y);
         dp.set(dps[0]);
@@ -30,7 +36,10 @@ public class Teki extends AbstractMono {
     public void move(int width, int height) {
         if (p.getX() > width) p.setX(-this.width);
         else if (p.getX() < -this.width) p.setX(width);
-        if (p.getY() > height) p.setY(-this.height);
+        if (p.getY() > height){
+            p.setX(rand.nextInt(1000)* DisplaySizeCheck.x);
+            p.setY(-this.height);
+        }
         else if (p.getY() < -this.height) p.setY(height);
     }
     @Override
@@ -39,7 +48,7 @@ public class Teki extends AbstractMono {
     }
     @Override
     public int getScore() {
-        return 1000;
+        return 5000;
     }
     @Override
     public void step(double t, int width, int height) {

@@ -21,7 +21,6 @@ public class DrawList extends ArrayList<Mono> {
     }
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
-        score.draw(canvas);
         for (Mono m : this) {
             m.draw(canvas);
         }
@@ -30,7 +29,8 @@ public class DrawList extends ArrayList<Mono> {
                 m.draw(canvas);
             }
         }
-        Debug.draw(canvas);
+        score.draw(canvas);
+        //Debug.draw(canvas);
     }
     public void step(double t, int width, int height) {
         for (Mono m : this) {

@@ -11,12 +11,12 @@ public class Debug {
     private Debug() {
         init();
     }
-    public static void draw(Canvas canvas) {
-        if (mode) return;
-        if (pr == null || canvas == null) return;
-        paint.setColor(Color.WHITE);
-        canvas.drawText(pr.toString(), 0, 100, paint);
-    }
+//    public static void draw(Canvas canvas) {
+//        if (mode) return;
+//        if (pr == null || canvas == null) return;
+//        paint.setColor(Color.WHITE);
+//        canvas.drawText(pr.toString(), 0, 100, paint);
+//    }
     public static void init() {
         pr = new HashMap<>();
     }
