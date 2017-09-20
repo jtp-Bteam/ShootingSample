@@ -21,6 +21,10 @@ public class DrawList extends ArrayList<Mono> {
     }
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
+<<<<<<< HEAD
+=======
+        score.draw(canvas);
+>>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
         for (Mono m : this) {
             m.draw(canvas);
         }
@@ -29,8 +33,12 @@ public class DrawList extends ArrayList<Mono> {
                 m.draw(canvas);
             }
         }
+<<<<<<< HEAD
         score.draw(canvas);
         //Debug.draw(canvas);
+=======
+        Debug.draw(canvas);
+>>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
     }
     public void step(double t, int width, int height) {
         for (Mono m : this) {
