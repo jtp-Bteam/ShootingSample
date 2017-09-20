@@ -1,28 +1,20 @@
 package jp.ac.dendai.c.jtp.shootingsample.mono;
 import android.content.Context;
-<<<<<<< HEAD
 import android.util.Log;
 
 import java.util.Random;
 
 import jp.ac.dendai.c.jtp.shootingsample.DisplaySizeCheck;
-=======
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
 import jp.ac.dendai.c.jtp.shootingsample.R;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public class Teki extends AbstractMono {
     private static final int[] ids = {R.drawable.teki1, R.drawable.teki2};
     private int dpindex;
-<<<<<<< HEAD
     Random rand = new Random();
     private final int x = (int)(3 - (rand.nextInt(7)) * DisplaySizeCheck.x);
     private final int y = (int)(5 - (rand.nextInt(3)) * DisplaySizeCheck.y);
     private Vect[] dps = {new Vect(x, y), new Vect(x, y)};
     private double dpcycle = 0;//200 + rand.nextInt(300); //500から1000の間にしてない
-=======
-    private Vect[] dps = {new Vect(1, 1), new Vect(-1, 1)};
-    private double dpcycle = 1000;
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
     private double dpcounter;
     public Teki(Context context) {
         super(context, ids);
@@ -47,12 +39,8 @@ public class Teki extends AbstractMono {
     }
     @Override
     public int getScore() {
-<<<<<<< HEAD
         return 1000;
-=======
-        return 100;
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
-    }
+       }
     @Override
     public void step(double t, int width, int height) {
         period += t;

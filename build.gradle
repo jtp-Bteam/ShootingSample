@@ -3,16 +3,13 @@
 buildscript {
     repositories {
         jcenter()
-<<<<<<< HEAD
         google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-beta6'
-=======
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,10 +19,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-<<<<<<< HEAD
         google()
-=======
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
     }
 }
 

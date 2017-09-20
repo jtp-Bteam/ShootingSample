@@ -8,11 +8,8 @@ import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public abstract class AbstractMono implements Mono {
     protected final int width;
     protected final int height;
-<<<<<<< HEAD
     public Vect p;
-=======
-    protected Vect p;
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
+    //protected Vect p;
     protected Vect dp;
     protected double period;
     protected Rect rect;

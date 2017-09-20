@@ -24,11 +24,8 @@ public class View extends SurfaceView {
     private Score score;
     private TekiLogic tekiLogic;
     private final Object lock;
-<<<<<<< HEAD
     Stick stick;
 
-=======
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
     public View(Context context, Point p) {
         super(context);
         this.context = context;
@@ -57,15 +54,12 @@ public class View extends SurfaceView {
         destroyThread(moveThread);
         drawThread = new DrawThread();
         moveThread = new MoveThread();
-<<<<<<< HEAD
 
         Controller controller = new Controller();
 
         stick = controller.getStick(0);
 
         setOnTouchListener(controller);
-=======
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
     }
     public void start(){
         shutdown = false;
@@ -86,10 +80,7 @@ public class View extends SurfaceView {
     private void draw() {
         synchronized (lock) {
             Canvas canvas = getHolder().lockCanvas();
-<<<<<<< HEAD
             setPosition();
-=======
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
             if (canvas == null) return;
             drawList.draw(canvas);
             getHolder().unlockCanvasAndPost(canvas); // 描画を終了
@@ -97,7 +88,6 @@ public class View extends SurfaceView {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-<<<<<<< HEAD
 //        switch (event.getAction()) {
 //            case MotionEvent.ACTION_DOWN:
 //                mikata.setDirection(event, width, height);
@@ -112,22 +102,6 @@ public class View extends SurfaceView {
 //                performClick();
 //                break;
 //        }
-=======
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mikata.setDirection(event, width, height);
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                mikata.stop();
-                if (shutdown) {
-                    init();
-                    start();
-                }
-                performClick();
-                break;
-        }
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
         return true;
     }
     @Override
@@ -135,14 +109,11 @@ public class View extends SurfaceView {
         super.performClick();
         return true;
     }
-<<<<<<< HEAD
     public void setPosition()
     {
         mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
     }
 
-=======
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
     class MoveThread extends Thread {
         @Override
         public void run() {
@@ -159,12 +130,8 @@ public class View extends SurfaceView {
                 }
                 previous = now;
 
-<<<<<<< HEAD
                 score.add(1);
                 for (Shootable s : tamaList) { //敵の死の判定
-=======
-                for (Shootable s : tamaList) {
->>>>>>> 235a13045a9c0651c467207ba41048e0bb82926d
                     Mono m = tekiList.atari(s.getRect());
                     if (m != null) {
                         score.add(m.getScore());
