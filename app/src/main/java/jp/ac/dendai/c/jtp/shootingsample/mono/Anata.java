@@ -2,22 +2,26 @@ package jp.ac.dendai.c.jtp.shootingsample.mono;
 import android.content.Context;
 import android.view.MotionEvent;
 import jp.ac.dendai.c.jtp.shootingsample.Debug;
+import jp.ac.dendai.c.jtp.shootingsample.DisplaySizeCheck;
 import jp.ac.dendai.c.jtp.shootingsample.HanteiList;
 import jp.ac.dendai.c.jtp.shootingsample.R;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public class Anata extends AbstractShooter implements Mikata {
     private static final int[] ids = {R.drawable.anata};
-    private double shootperiod = 100;
+    private static double shootperiod;
     private static final Vect tamadp = new Vect(0, -30);
     private double shoottic;
     public Anata(Context context, HanteiList<Shootable> tamalist) {
         super(context, ids, tamalist, new Tama(context));
         shoottic = 0;
+        shootperiod = 100;
     }
     @Override
     public void move(int width, int height) {
-        if (p.getX() > width) p.setX(width);
-        if (p.getX() < -this.width) p.setX(0);
+        if (p.getX() > width) p.setX(width); //右
+        else if (p.getX() < -this.width) p.setX(0); //左
+        if (p.getY() > height - (250.0 * DisplaySizeCheck.y)) p.setY(height - (250.0 * DisplaySizeCheck.y)); //下
+        else if (p.getY() < -this.height) ultimate(); //上
     }
     @Override
     public void setDirection(MotionEvent event, int width, int height) {
@@ -46,7 +50,11 @@ public class Anata extends AbstractShooter implements Mikata {
         p.setY(p.getY()+y);
     }
 
-    public void powerUp(boolean a){
-        shootperiod -= 10;
+    public void powerUp(){
+        if(shootperiod > 20) shootperiod -= 20;
+    }
+
+    public void ultimate(){
+        shootperiod = 10;
     }
 }
