@@ -52,11 +52,11 @@ public class Anata extends AbstractShooter implements Mikata {
 
     @Override
     public void powerUp(){
-        if(shootperiod > 50) shootperiod -= 50;
+        if(shootperiod > 50) shootperiod -= 10;
         //else if()
     }
 
     public void ultimate(){
-        shootperiod = 50;
+        shootperiod = 10;
     }
 }

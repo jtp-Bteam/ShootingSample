@@ -1,19 +1,11 @@
 //このクラスの存在意義は、端末の解像度ごとに違う要素を同じものとするため（移動速度など）
+//バリバリグローバル変数を使っているところが反省点
 
 package jp.ac.dendai.c.jtp.shootingsample;
 
-import java.lang.reflect.Method;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Point;
-import android.os.Build;
 import android.view.Display;
-import android.view.View;
-
-/**
- * Created by xxx on 2017/09/19.
- */
 
 public class DisplaySizeCheck {
     public static double x, y;

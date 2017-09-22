@@ -18,17 +18,17 @@ public class ItemLogic { //ほとんどTekiLogicをコピペしただけ
         this.context = context;
         this.list = list;
         tic = 0;
-        list.add(createItem());
+        //list.add(createItem());
     }
 
     private PowerUpMono createItem() {
-        return new RapidShotItem(context, 500, 30);
+        return new RapidShotItem(context, (int)(rand.nextInt(1000) * DisplaySizeCheck.x), 30);
     }
 
     public void step(double tstep) {
         tic += tstep;
         while (tic > period) {
-            if(true) list.add(createItem());
+            if(rand.nextInt(10) == 0) list.add(createItem());
             tic -= period;
         }
     }
