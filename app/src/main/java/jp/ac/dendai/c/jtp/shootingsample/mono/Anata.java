@@ -8,7 +8,7 @@ import jp.ac.dendai.c.jtp.shootingsample.R;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public class Anata extends AbstractShooter implements Mikata {
     private static final int[] ids = {R.drawable.anata};
-    private static double shootperiod;
+    private double shootperiod;
     private static final Vect tamadp = new Vect(0, -30);
     private double shoottic;
     public Anata(Context context, HanteiList<Shootable> tamalist) {
@@ -50,11 +50,13 @@ public class Anata extends AbstractShooter implements Mikata {
         p.setY(p.getY()+y);
     }
 
+    @Override
     public void powerUp(){
-        if(shootperiod > 20) shootperiod -= 20;
+        if(shootperiod > 50) shootperiod -= 50;
+        //else if()
     }
 
     public void ultimate(){
-        shootperiod = 10;
+        shootperiod = 50;
     }
 }

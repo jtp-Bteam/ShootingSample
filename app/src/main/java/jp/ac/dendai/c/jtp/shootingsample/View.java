@@ -8,6 +8,7 @@ import jp.ac.dendai.c.jtp.shootingsample.mono.Haikei;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Anata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mikata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mono;
+import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpMono;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Shootable;
 public class View extends SurfaceView {
     final static long tic = 10;
@@ -18,11 +19,13 @@ public class View extends SurfaceView {
     private Mikata mikata;
     private HanteiList<Mono> tekiList;
     private HanteiList<Shootable> tamaList;
+    private HanteiList<PowerUpMono> itemList;
     private Context context;
     private DrawThread drawThread;
     private MoveThread moveThread;
     private Score score;
     private TekiLogic tekiLogic;
+    private ItemLogic itemLogic;
     private final Object lock;
     Stick stick;
 
@@ -55,8 +58,12 @@ public class View extends SurfaceView {
         tekiList = new HanteiList<>();
         tekiLogic = new TekiLogic(context, tekiList);
 
+        itemList = new HanteiList<>();
+        itemLogic = new ItemLogic(context, itemList);
+
         drawList.addList(tekiList);
         drawList.addList(tamaList);
+        drawList.addList(itemList);
 
         destroyThread(drawThread);
         destroyThread(moveThread);
@@ -136,6 +143,7 @@ public class View extends SurfaceView {
                     //    Debug.append("tstep",""+tstep);
                     drawList.step(tstep, width, height);
                     tekiLogic.step(tstep, width, height);
+                    itemLogic.step(tstep);
                 }
                 previous = now;
 
@@ -154,9 +162,16 @@ public class View extends SurfaceView {
                 if (tekiList.atari(mikata.getRect()) != null) { //自分への衝突判定
                     drawList.stop();
                     shutdown = true;
-//                    new Restart(context, width, height);
                     break;
                 }
+
+                PowerUpMono pum = itemList.atari(mikata.getRect()); //アイテム取得判定
+                if(pum != null){
+                    score.add(pum.getScore());
+                    mikata.powerUp();
+                    pum.dead();
+                }
+
                 try {
                     sleep((long) tic);
                 } catch (InterruptedException e) {
