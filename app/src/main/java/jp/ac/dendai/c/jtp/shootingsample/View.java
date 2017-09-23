@@ -2,6 +2,8 @@ package jp.ac.dendai.c.jtp.shootingsample;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -36,11 +38,13 @@ public class View extends SurfaceView {
     Stick stick;
 
 
-    public View(Context context, Point p) {
-        super(context);
+    public View(Context context, AttributeSet attr) {
+        super(context,attr);
         this.context = context;
-        width = p.x;
-        height = p.y;
+
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        width = dm.widthPixels;
+        height =dm.heightPixels;
         lock = new Object();
     }
 //    public View(Context context, int width, int height) {
@@ -133,6 +137,7 @@ public class View extends SurfaceView {
         super.performClick();
         return true;
     }
+
 
     class MoveThread extends Thread {
         @Override

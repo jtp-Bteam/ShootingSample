@@ -1,9 +1,11 @@
 package jp.ac.dendai.c.jtp.shootingsample;
+import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Display;
+import android.view.Window;
 import android.widget.RelativeLayout;
 
 import java.util.Random;
@@ -17,6 +19,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        view = (View)findViewById(R.id.view);
         instance = this;
     }
     @Override
@@ -25,9 +29,7 @@ public class MainActivity extends ActionBarActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point p = new Point();
         display.getSize(p);
-        view = new View(this, p);
         view.init();
-        setContentView(view);
     }
     @Override
     public void onResume(){
