@@ -7,11 +7,9 @@ import java.util.Random;
 import jp.ac.dendai.c.jtp.shootingsample.DisplaySizeCheck;
 import jp.ac.dendai.c.jtp.shootingsample.MainActivity;
 import jp.ac.dendai.c.jtp.shootingsample.R;
+import jp.ac.dendai.c.jtp.shootingsample.Sound;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 
-/**
- * Created by xxx on 2017/09/20.
- */
 
 public class RareTeki extends AbstractMono{
     private static final int[] ids = {R.drawable.hiragana_34_te, R.drawable.hiragana_12_ki};
@@ -31,6 +29,7 @@ public class RareTeki extends AbstractMono{
         dp.set(dps[0]);
         dpindex = 0;
         dpcounter = 0;
+        Sound.playFromSoundPool(R.raw.shyuin);
     }
     @Override
     public void move(int width, int height) {
@@ -39,6 +38,7 @@ public class RareTeki extends AbstractMono{
         if (p.getY() > height){
             p.setX(rand.nextInt(1000)* DisplaySizeCheck.x);
             p.setY(-this.height);
+            Sound.playFromSoundPool(R.raw.shyuin);
         }
         else if (p.getY() < -this.height) p.setY(height);
     }

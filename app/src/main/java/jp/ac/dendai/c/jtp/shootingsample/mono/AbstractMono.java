@@ -4,6 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+
+import jp.ac.dendai.c.jtp.shootingsample.MainActivity;
+import jp.ac.dendai.c.jtp.shootingsample.R;
+import jp.ac.dendai.c.jtp.shootingsample.Sound;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public abstract class AbstractMono implements Mono {
     protected final int width;
@@ -84,5 +88,6 @@ public abstract class AbstractMono implements Mono {
     @Override
     public void dead() {
         alive = false;
+        Sound.playFromSoundPool(R.raw.bakuhatsu);
     }
 }

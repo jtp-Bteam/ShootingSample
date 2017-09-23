@@ -2,6 +2,8 @@ package jp.ac.dendai.c.jtp.shootingsample;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -16,6 +18,7 @@ import android.view.Display;
 public class MainActivity extends Activity {
     private View view;
     private Thread mainThread;
+    private Sound sound;
     private static MainActivity instance = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,15 @@ public class MainActivity extends Activity {
         super.onResume();
         setScreenType();
         view.start();
+        sound = new Sound(this);
+        Sound.playFromMediaPlayer();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        //リリース
+        //sound.soundRelease();
+        Sound.soundRelease();
     }
     @Override
     public void onStop(){
@@ -60,10 +72,6 @@ public class MainActivity extends Activity {
 
     public static MainActivity getInstance() {
         return instance;
-    }
-
-    public void SetContentView(View view){
-        setContentView(view);
     }
 
     private void setScreenType()
