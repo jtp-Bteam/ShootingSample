@@ -64,7 +64,6 @@ public class View extends SurfaceView {
 //        lock = new Object();
 //    }
     public void init() {
-        System.out.println("init : start");
         drawList = new DrawList();
         score = new Score();
         drawList.addScore(score);
@@ -98,17 +97,13 @@ public class View extends SurfaceView {
         stick = controller.getStick(0);
 
         setOnTouchListener(controller);
-        System.out.println("init : end");
     }
     public void start(){
-        System.out.println("start : start");
         shutdown = false;
         drawThread.start();
         moveThread.start();
-        System.out.println("start : end");
     }
     private void destroyThread(Thread t) {
-        System.out.println("Thread : start");
         if (t != null) {
             shutdown = true;
             while (t.isAlive()) {
@@ -119,7 +114,6 @@ public class View extends SurfaceView {
                 }
             }
         }
-        System.out.println("Thread : end");
     }
     private void draw() {
         synchronized (lock) {
@@ -161,7 +155,6 @@ public class View extends SurfaceView {
             double previous = (double) System.currentTimeMillis();
             double now;
             while (!shutdown) {
-                System.out.println("move");
                 Debug.append("tamasize", "" + tamaList.size());
                 synchronized (lock) {
                     now = System.currentTimeMillis();
@@ -213,7 +206,6 @@ public class View extends SurfaceView {
         @Override
         public void run() {
             while (!shutdown) {
-                System.out.println("draw");
                 draw();
                 try {
                     sleep(10);
