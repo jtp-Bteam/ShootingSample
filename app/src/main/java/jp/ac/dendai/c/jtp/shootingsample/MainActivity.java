@@ -20,8 +20,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        setScreenType();
         setContentView(R.layout.activity_main);
         view = (View)findViewById(R.id.view);
 
@@ -32,13 +31,13 @@ public class MainActivity extends Activity {
         super.onStart();
         Display display = getWindowManager().getDefaultDisplay();
         Point p = new Point();
-        setScreenType();
         display.getSize(p);
         view.init();
     }
     @Override
     public void onResume(){
         super.onResume();
+        setScreenType();
         view.start();
     }
     @Override

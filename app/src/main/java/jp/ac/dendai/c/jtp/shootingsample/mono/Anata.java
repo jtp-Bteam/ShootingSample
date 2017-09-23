@@ -20,7 +20,8 @@ public class Anata extends AbstractShooter implements Mikata {
     public void move(int width, int height) {
         if (p.getX() > width-this.width) p.setX(width-this.width); //右
         else if (p.getX() < 0) p.setX(0); //左
-        if (p.getY() > height - (250.0 * DisplaySizeCheck.y)) p.setY(height - (250.0 * DisplaySizeCheck.y)); //下
+//        if (p.getY() > height - (250.0 * DisplaySizeCheck.y)) p.setY(height - (250.0 * DisplaySizeCheck.y)); //下
+        if(p.getY() > height-this.height) p.setY(height-this.height);
         else if (p.getY() < -this.height) ultimate(); //上
     }
     @Override

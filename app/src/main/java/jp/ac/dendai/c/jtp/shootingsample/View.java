@@ -1,9 +1,12 @@
 package jp.ac.dendai.c.jtp.shootingsample;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -42,9 +45,12 @@ public class View extends SurfaceView {
         super(context,attr);
         this.context = context;
 
-        DisplayMetrics dm = context.getResources().getDisplayMetrics();
-        width = dm.widthPixels;
-        height =dm.heightPixels;
+        Point size = new Point();
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        display.getRealSize(size);
+
+        width = size.x;
+        height =size.y;
         lock = new Object();
     }
 //    public View(Context context, int width, int height) {
@@ -58,7 +64,7 @@ public class View extends SurfaceView {
         drawList = new DrawList();
         score = new Score();
         drawList.addScore(score);
-        drawList.add(new Haikei(context));
+        drawList.add(new Haikei(context,width,height));
 
         tamaList = new HanteiList<>();
         mikata = new Anata(context, tamaList);

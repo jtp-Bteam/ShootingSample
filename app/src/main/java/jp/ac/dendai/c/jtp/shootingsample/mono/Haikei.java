@@ -13,11 +13,10 @@ public class Haikei extends AbstractMono {
     float scrollspeed = 10;
     Bitmap bitmap;
 
-    public Haikei(Context context){
+    public Haikei(Context context,int width,int height){
         super(context,ids);
-        DisplayMetrics dm = context.getResources().getDisplayMetrics();
-        width = dm.widthPixels;
-        height =dm.heightPixels;
+        this.width = width;
+        this.height = height;
 
         bitmap = BitmapFactory.decodeResource(context.getResources(),ids[0]);
         bitmap = Bitmap.createScaledBitmap(bitmap,width,height,true);
