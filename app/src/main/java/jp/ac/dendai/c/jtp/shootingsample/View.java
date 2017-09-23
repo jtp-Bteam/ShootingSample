@@ -4,6 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
+
+import java.util.ArrayList;
+
+import jp.ac.dendai.c.jtp.shootingsample.mono.Effect;
+import jp.ac.dendai.c.jtp.shootingsample.mono.Explosion;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Haikei;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Anata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mikata;
@@ -20,6 +25,7 @@ public class View extends SurfaceView {
     private HanteiList<Mono> tekiList;
     private HanteiList<Shootable> tamaList;
     private HanteiList<PowerUpMono> itemList;
+    private ArrayList<Effect> effectList;
     private Context context;
     private DrawThread drawThread;
     private MoveThread moveThread;
@@ -61,9 +67,12 @@ public class View extends SurfaceView {
         itemList = new HanteiList<>();
         itemLogic = new ItemLogic(context, itemList);
 
+        effectList = new ArrayList<>();
+
         drawList.addList(tekiList);
         drawList.addList(tamaList);
         drawList.addList(itemList);
+        drawList.addList(effectList);
 
         destroyThread(drawThread);
         destroyThread(moveThread);
@@ -152,6 +161,7 @@ public class View extends SurfaceView {
                     Mono m = tekiList.atari(s.getRect());
                     if (m != null) {
                         score.add(m.getScore());
+                        effectList.add(new Explosion(context,m.getRect().centerX(),m.getRect().centerY()));
                         s.dead();
                         m.dead();
                     }
