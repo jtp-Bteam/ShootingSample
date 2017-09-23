@@ -104,7 +104,6 @@ public class View extends SurfaceView {
     private void draw() {
         synchronized (lock) {
             Canvas canvas = getHolder().lockCanvas();
-            setPosition();
             if (canvas == null) return;
             drawList.draw(canvas);
             getHolder().unlockCanvasAndPost(canvas); // 描画を終了
@@ -134,10 +133,6 @@ public class View extends SurfaceView {
         super.performClick();
         return true;
     }
-    public void setPosition()
-    {
-        mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
-    }
 
     class MoveThread extends Thread {
         @Override
@@ -150,6 +145,7 @@ public class View extends SurfaceView {
                     now = System.currentTimeMillis();
                     double tstep = (now - previous) / tic;
                     //    Debug.append("tstep",""+tstep);
+                    mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
                     drawList.step(tstep, width, height);
                     tekiLogic.step(tstep, width, height);
                     itemLogic.step(tstep);
