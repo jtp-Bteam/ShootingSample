@@ -1,6 +1,8 @@
 package jp.ac.dendai.c.jtp.shootingsample.mono;
 import android.content.Context;
 import jp.ac.dendai.c.jtp.shootingsample.HanteiList;
+import jp.ac.dendai.c.jtp.shootingsample.R;
+import jp.ac.dendai.c.jtp.shootingsample.Sound;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public abstract class AbstractShooter extends AbstractMono implements Shooter {
     private HanteiList<Shootable> list;
@@ -16,5 +18,6 @@ public abstract class AbstractShooter extends AbstractMono implements Shooter {
         Shootable newtama = tama.getInstance();
         newtama.init(p.front(tama.getRect()), dp);
         list.add(newtama);
+        Sound.playFromSoundPool(R.raw.shot3);
     }
 }
