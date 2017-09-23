@@ -1,9 +1,20 @@
 package jp.ac.dendai.c.jtp.shootingsample;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.os.Handler;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
+
+import java.util.ArrayList;
+
+import jp.ac.dendai.c.jtp.shootingsample.mono.Effect;
+import jp.ac.dendai.c.jtp.shootingsample.mono.Explosion;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Haikei;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Anata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mikata;
@@ -20,6 +31,7 @@ public class View extends SurfaceView {
     private HanteiList<Mono> tekiList;
     private HanteiList<Shootable> tamaList;
     private HanteiList<PowerUpMono> itemList;
+    private ArrayList<Effect> effectList;
     private Context context;
     private DrawThread drawThread;
     private MoveThread moveThread;
@@ -27,14 +39,21 @@ public class View extends SurfaceView {
     private TekiLogic tekiLogic;
     private ItemLogic itemLogic;
     private final Object lock;
+    private Handler handler;
     Stick stick;
 
 
-    public View(Context context, Point p) {
-        super(context);
+    public View(Context context, AttributeSet attr) {
+        super(context,attr);
         this.context = context;
-        width = p.x;
-        height = p.y;
+
+        Point size = new Point();
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        display.getRealSize(size);
+
+        width = size.x;
+        height =size.y;
+        handler = new Handler();
         lock = new Object();
     }
 //    public View(Context context, int width, int height) {
@@ -48,7 +67,7 @@ public class View extends SurfaceView {
         drawList = new DrawList();
         score = new Score();
         drawList.addScore(score);
-        drawList.add(new Haikei(context));
+        drawList.add(new Haikei(context,width,height));
 
         tamaList = new HanteiList<>();
         mikata = new Anata(context, tamaList);
@@ -61,9 +80,12 @@ public class View extends SurfaceView {
         itemList = new HanteiList<>();
         itemLogic = new ItemLogic(context, itemList);
 
+        effectList = new ArrayList<>();
+
         drawList.addList(tekiList);
         drawList.addList(tamaList);
         drawList.addList(itemList);
+        drawList.addList(effectList);
 
         destroyThread(drawThread);
         destroyThread(moveThread);
@@ -85,6 +107,7 @@ public class View extends SurfaceView {
         if (t != null) {
             shutdown = true;
             while (t.isAlive()) {
+                System.out.println(t.getClass().getName()+":"+t.getState());
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -95,7 +118,6 @@ public class View extends SurfaceView {
     private void draw() {
         synchronized (lock) {
             Canvas canvas = getHolder().lockCanvas();
-            setPosition();
             if (canvas == null) return;
             drawList.draw(canvas);
             getHolder().unlockCanvasAndPost(canvas); // 描画を終了
@@ -125,10 +147,7 @@ public class View extends SurfaceView {
         super.performClick();
         return true;
     }
-    public void setPosition()
-    {
-        mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
-    }
+
 
     class MoveThread extends Thread {
         @Override
@@ -141,6 +160,7 @@ public class View extends SurfaceView {
                     now = System.currentTimeMillis();
                     double tstep = (now - previous) / tic;
                     //    Debug.append("tstep",""+tstep);
+                    mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
                     drawList.step(tstep, width, height);
                     tekiLogic.step(tstep, width, height);
                     itemLogic.step(tstep);
@@ -152,6 +172,7 @@ public class View extends SurfaceView {
                     Mono m = tekiList.atari(s.getRect());
                     if (m != null) {
                         score.add(m.getScore());
+                        effectList.add(new Explosion(context,m.getRect().centerX(),m.getRect().centerY()));
                         s.dead();
                         m.dead();
                     }
@@ -178,6 +199,7 @@ public class View extends SurfaceView {
                     shutdown = true;
                 }
             }
+            handler.post(new GameOver());
         }
     }
     class DrawThread extends Thread {
@@ -191,6 +213,14 @@ public class View extends SurfaceView {
                     shutdown = true;
                 }
             }
+        }
+    }
+
+    class GameOver implements Runnable {    //ここにshutdownがtrueになったときの処理を書けば動くよ！
+        @Override
+        public void run() {
+            init();
+            start();
         }
     }
 }

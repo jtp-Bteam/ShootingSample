@@ -4,11 +4,14 @@ import android.graphics.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import jp.ac.dendai.c.jtp.shootingsample.mono.Effect;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mono;
 public class DrawList extends ArrayList<Mono> {
     private static final long serialVersionUID = 6330699380650402372L;
     private Score score;
     private List<HanteiList<? extends Mono>> list;
+    private ArrayList<Effect> effectList;
     public DrawList() {
         super();
         list = new ArrayList<>();
@@ -19,6 +22,7 @@ public class DrawList extends ArrayList<Mono> {
     public void addList(HanteiList<? extends Mono> list) {
         this.list.add(list);
     }
+    public void addList(ArrayList<Effect> effectList) {this.effectList = effectList;}
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
         score.draw(canvas);
@@ -29,6 +33,10 @@ public class DrawList extends ArrayList<Mono> {
             for (Mono m : l) {
                 m.draw(canvas);
             }
+        }
+        for(Effect effect : effectList)
+        {
+            effect.draw(canvas);
         }
         score.draw(canvas);
         //Debug.draw(canvas);
@@ -41,6 +49,10 @@ public class DrawList extends ArrayList<Mono> {
             for (Mono m : l) {
                 m.step(t, width, height);
             }
+        }
+        for(Effect effect : effectList)
+        {
+            effect.step();
         }
     }
     public void stop() {
@@ -67,6 +79,12 @@ public class DrawList extends ArrayList<Mono> {
                 if (!k.next().isAlive()) {
                     k.remove();
                 }
+            }
+        }
+        Iterator<Effect> e = effectList.iterator();
+        while (e.hasNext()) {
+            if (!e.next().isAlive()) {
+                e.remove();
             }
         }
     }
