@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -38,6 +39,7 @@ public class View extends SurfaceView {
     private TekiLogic tekiLogic;
     private ItemLogic itemLogic;
     private final Object lock;
+    private Handler handler;
     Stick stick;
 
 
@@ -51,6 +53,7 @@ public class View extends SurfaceView {
 
         width = size.x;
         height =size.y;
+        handler = new Handler();
         lock = new Object();
     }
 //    public View(Context context, int width, int height) {
@@ -195,6 +198,7 @@ public class View extends SurfaceView {
                     shutdown = true;
                 }
             }
+            handler.post(new GameOver());
         }
     }
     class DrawThread extends Thread {
@@ -208,6 +212,14 @@ public class View extends SurfaceView {
                     shutdown = true;
                 }
             }
+        }
+    }
+
+    class GameOver implements Runnable {    //ここにshutdownがtrueになったときの処理を書けば動くよ！
+        @Override
+        public void run() {
+            init();
+            start();
         }
     }
 }
