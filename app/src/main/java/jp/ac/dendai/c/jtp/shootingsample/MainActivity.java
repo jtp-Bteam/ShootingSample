@@ -1,4 +1,5 @@
 package jp.ac.dendai.c.jtp.shootingsample;
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -12,15 +13,18 @@ import java.util.Random;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Display;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     private View view;
     private Thread mainThread;
     private static MainActivity instance = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
         view = (View)findViewById(R.id.view);
+
         instance = this;
     }
     @Override
@@ -28,6 +32,7 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
         Display display = getWindowManager().getDefaultDisplay();
         Point p = new Point();
+        setScreenType();
         display.getSize(p);
         view.init();
     }
@@ -60,5 +65,13 @@ public class MainActivity extends ActionBarActivity {
 
     public void SetContentView(View view){
         setContentView(view);
+    }
+
+    private void setScreenType()
+    {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  //縦固定
+        android.view.View decor = this.getWindow().getDecorView();
+        decor.setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION    //下の戻るボタンとかの非表示
+                | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN | android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); //上の時計とかを非表示 | 一定時間後に再び非表示
     }
 }
