@@ -185,19 +185,30 @@ public class View extends SurfaceView {
                 synchronized (lock) {
                     drawList.update();
                 }
-                if (tekiList.atari(mikata.getRect()) != null) { //自分への衝突判定
-                    drawList.stop();
-                    shutdown = true;
-                    break;
+                if (tekiList.atari(mikata.getRect()) != null && !mikata.isMuteki()) { //自分への衝突判定
+                    if(!mikata.hasZanki(handler))
+                    {
+                        drawList.stop();
+                        shutdown = true;
+                        break;
+                    }
+                    else
+                    {
+                        mikata.startMuteki();
+                    }
                 }
 
-                PowerUpMono pum = itemList.atari(mikata.getRect()); //アイテム取得判定
-                if(pum != null){
-                    score.add(pum.getScore());
-                    mikata.powerUp();
-                    effectList.add(new PowerUpEffect(context,mikata,false));
-                    pum.dead();
+                if(!mikata.isMuteki())  //無敵状態でアイテムを取らせない
+                {
+                    PowerUpMono pum = itemList.atari(mikata.getRect()); //アイテム取得判定
+                    if(pum != null){
+                        score.add(pum.getScore());
+                        mikata.powerUp();
+                        effectList.add(new PowerUpEffect(context,mikata,false));
+                        pum.dead();
+                    }
                 }
+
 
                 try {
                     sleep((long) tic);
