@@ -12,12 +12,12 @@ import jp.ac.dendai.c.jtp.shootingsample.R;
 public class Explosion extends Effect {
 
     public Explosion(Context context,float x,float y) {
-        super(context,x,y);
+        super(context,x,y,false);
     }
 
     @Override
     int getFrameRate() {
-        return 0;
+        return 1;
     }
 
     @Override
