@@ -18,7 +18,7 @@ import android.view.Display;
 public class MainActivity extends Activity {
     private View view;
     private Thread mainThread;
-    private Sound sound;
+    //private Sound sound;
     private static MainActivity instance = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,15 @@ public class MainActivity extends Activity {
         super.onResume();
         setScreenType();
         view.start();
-        sound = new Sound(this);
-        Sound.playFromMediaPlayer();
+        //sound = Sound.getInstance();
+        Sound.getInstance().init();
+        Sound.getInstance().playFromMediaPlayer();
     }
     @Override
     public void onPause(){
         super.onPause();
         //リリース
-        //sound.soundRelease();
-        Sound.soundRelease();
+        Sound.getInstance().soundRelease();
     }
     @Override
     public void onStop(){

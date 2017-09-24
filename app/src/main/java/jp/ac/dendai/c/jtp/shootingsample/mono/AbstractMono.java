@@ -88,6 +88,7 @@ public abstract class AbstractMono implements Mono {
     @Override
     public void dead() {
         alive = false;
-        Sound.playFromSoundPool(R.raw.bakuhatsu);
+        Sound.getInstance().playFromSoundPool(R.raw.bakuhatsu);
+        System.out.println("ちゃんとオーバーライドしてね");
     }
 }

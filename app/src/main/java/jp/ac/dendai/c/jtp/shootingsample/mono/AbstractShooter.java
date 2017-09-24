@@ -18,6 +18,6 @@ public abstract class AbstractShooter extends AbstractMono implements Shooter {
         Shootable newtama = tama.getInstance();
         newtama.init(p.front(tama.getRect()), dp);
         list.add(newtama);
-        Sound.playFromSoundPool(R.raw.shot3);
+        Sound.getInstance().playFromSoundPool(R.raw.shot3);
     }
 }

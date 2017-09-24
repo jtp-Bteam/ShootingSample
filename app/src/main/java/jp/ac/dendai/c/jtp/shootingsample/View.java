@@ -21,6 +21,9 @@ import jp.ac.dendai.c.jtp.shootingsample.mono.Mikata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mono;
 import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpMono;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Shootable;
+
+import static java.lang.Thread.sleep;
+
 public class View extends SurfaceView {
     final static long tic = 10;
     public volatile boolean shutdown;
@@ -109,7 +112,7 @@ public class View extends SurfaceView {
             while (t.isAlive()) {
                 System.out.println(t.getClass().getName()+":"+t.getState());
                 try {
-                    Thread.sleep(10);
+                    sleep(10);
                 } catch (InterruptedException e) {
                 }
             }
@@ -125,7 +128,6 @@ public class View extends SurfaceView {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        System.out.println("waowao");
 //        switch (event.getAction()) {
 //            case MotionEvent.ACTION_DOWN:
 //                mikata.setDirection(event, width, height);

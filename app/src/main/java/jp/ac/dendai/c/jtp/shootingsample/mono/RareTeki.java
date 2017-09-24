@@ -29,7 +29,7 @@ public class RareTeki extends AbstractMono{
         dp.set(dps[0]);
         dpindex = 0;
         dpcounter = 0;
-        Sound.playFromSoundPool(R.raw.shyuin);
+        Sound.getInstance().playFromSoundPool(R.raw.shyuin);
     }
     @Override
     public void move(int width, int height) {
@@ -38,7 +38,7 @@ public class RareTeki extends AbstractMono{
         if (p.getY() > height){
             p.setX(rand.nextInt(1000)* DisplaySizeCheck.x);
             p.setY(-this.height);
-            Sound.playFromSoundPool(R.raw.shyuin);
+            Sound.getInstance().playFromSoundPool(R.raw.shyuin);
         }
         else if (p.getY() < -this.height) p.setY(height);
     }

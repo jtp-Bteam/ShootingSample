@@ -6,6 +6,7 @@ import java.util.Random;
 
 import jp.ac.dendai.c.jtp.shootingsample.DisplaySizeCheck;
 import jp.ac.dendai.c.jtp.shootingsample.R;
+import jp.ac.dendai.c.jtp.shootingsample.Sound;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 
 public class BossTeki extends AbstractMono {
@@ -62,11 +63,13 @@ public class BossTeki extends AbstractMono {
         setRect();
     }
 
+    @Override
     public void dead(){
         if(life > 0){
             life--;
         }
         else{
+            Sound.getInstance().playFromSoundPool(R.raw.bakuhatsubig);
             alive = false;
         }
     }

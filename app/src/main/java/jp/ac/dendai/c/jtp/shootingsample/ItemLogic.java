@@ -28,7 +28,7 @@ public class ItemLogic { //ほとんどTekiLogicをコピペしただけ
     public void step(double tstep) {
         tic += tstep;
         while (tic > period) {
-            if(rand.nextInt(10) == 0) list.add(createItem());
+            if(rand.nextInt(20) == 0) list.add(createItem());
             tic -= period;
         }
     }

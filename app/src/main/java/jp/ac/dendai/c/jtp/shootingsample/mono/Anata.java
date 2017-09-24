@@ -5,6 +5,7 @@ import jp.ac.dendai.c.jtp.shootingsample.Debug;
 import jp.ac.dendai.c.jtp.shootingsample.DisplaySizeCheck;
 import jp.ac.dendai.c.jtp.shootingsample.HanteiList;
 import jp.ac.dendai.c.jtp.shootingsample.R;
+import jp.ac.dendai.c.jtp.shootingsample.Sound;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public class Anata extends AbstractShooter implements Mikata {
     private static final int[] ids = {R.drawable.anata};
@@ -53,6 +54,7 @@ public class Anata extends AbstractShooter implements Mikata {
 
     @Override
     public void powerUp(){
+        Sound.getInstance().playFromSoundPool(R.raw.decision4);
         if(shootperiod > 50) shootperiod -= 10;
         //else if()
     }
