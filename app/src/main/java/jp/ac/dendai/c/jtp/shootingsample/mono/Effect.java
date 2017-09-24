@@ -15,19 +15,39 @@ public abstract class Effect{
     float x,y;
     int index,count;
     boolean isAlive = true;
+    Mono mono = null;
+    boolean loop;
+    int offsetX,offsetY;
 
-    public Effect(Context context,float x,float y)
+    public Effect(Context context,float x,float y,boolean loop)
     {
         this.context = context;
         this.x = x;
         this.y = y;
+        this.loop = loop;
+    }
+
+    public Effect(Context context,Mono m,boolean loop)
+    {
+        this.context = context;
+        mono = m;
+        this.loop = loop;
     }
 
 
     public void draw(Canvas canvas)
     {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),getIDs()[index]);
-        canvas.drawBitmap(bitmap,x-bitmap.getWidth()/2,y-bitmap.getHeight()/2,null);
+        if(mono == null)
+        {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),getIDs()[index]);
+            canvas.drawBitmap(bitmap,x-bitmap.getWidth()/2,y-bitmap.getHeight()/2,null);
+        }
+        else
+        {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),getIDs()[index]);
+            canvas.drawBitmap(bitmap,(mono.getRect().centerX()-bitmap.getWidth()/2)+offsetX,(mono.getRect().centerY()-bitmap.getHeight()/2)+offsetY,null);
+        }
+
     }
 
     public void step()
@@ -41,10 +61,9 @@ public abstract class Effect{
             }
             else count++;
         }
-        else
-        {
-            isAlive = false;
-        }
+        else if(loop) index = 0;
+        else isAlive = false;
+
     }
 
     public boolean isAlive()
@@ -55,6 +74,8 @@ public abstract class Effect{
     abstract int getFrameRate();
 
     abstract int[] getIDs();
+
+    public void stopLoop(){loop = false;}
 
 
 
