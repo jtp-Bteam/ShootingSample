@@ -19,6 +19,7 @@ import jp.ac.dendai.c.jtp.shootingsample.mono.Haikei;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Anata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mikata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mono;
+import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpEffect;
 import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpMono;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Shootable;
 
@@ -43,6 +44,7 @@ public class View extends SurfaceView {
     private ItemLogic itemLogic;
     private final Object lock;
     private Handler handler;
+    private Controller controller;
     Stick stick;
 
 
@@ -95,7 +97,7 @@ public class View extends SurfaceView {
         drawThread = new DrawThread();
         moveThread = new MoveThread();
 
-        Controller controller = new Controller();
+        controller = new Controller();
 
         stick = controller.getStick(0);
 
@@ -123,6 +125,7 @@ public class View extends SurfaceView {
             Canvas canvas = getHolder().lockCanvas();
             if (canvas == null) return;
             drawList.draw(canvas);
+            if(!(stick.originX == 0 && stick.originY == 0)) controller.draw(canvas);    //ここ消せばパッド表示だけ消えるよ
             getHolder().unlockCanvasAndPost(canvas); // 描画を終了
         }
     }
@@ -182,18 +185,30 @@ public class View extends SurfaceView {
                 synchronized (lock) {
                     drawList.update();
                 }
-                if (tekiList.atari(mikata.getRect()) != null) { //自分への衝突判定
-                    drawList.stop();
-                    shutdown = true;
-                    break;
+                if (tekiList.atari(mikata.getRect()) != null && !mikata.isMuteki()) { //自分への衝突判定
+                    if(!mikata.hasZanki(handler))
+                    {
+                        drawList.stop();
+                        shutdown = true;
+                        break;
+                    }
+                    else
+                    {
+                        mikata.startMuteki();
+                    }
                 }
 
-                PowerUpMono pum = itemList.atari(mikata.getRect()); //アイテム取得判定
-                if(pum != null){
-                    score.add(pum.getScore());
-                    mikata.powerUp();
-                    pum.dead();
+                if(!mikata.isMuteki())  //無敵状態でアイテムを取らせない
+                {
+                    PowerUpMono pum = itemList.atari(mikata.getRect()); //アイテム取得判定
+                    if(pum != null){
+                        score.add(pum.getScore());
+                        mikata.powerUp();
+                        effectList.add(new PowerUpEffect(context,mikata,false));
+                        pum.dead();
+                    }
                 }
+
 
                 try {
                     sleep((long) tic);
