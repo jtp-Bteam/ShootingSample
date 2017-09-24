@@ -18,7 +18,7 @@ public class PowerUpEffect extends Effect {
 
     @Override
     int getFrameRate() {
-        return 5;
+        return 1;
     }
 
     @Override
