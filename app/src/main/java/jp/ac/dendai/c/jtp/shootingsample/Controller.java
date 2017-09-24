@@ -1,5 +1,8 @@
 package jp.ac.dendai.c.jtp.shootingsample;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -99,4 +102,19 @@ public class Controller implements View.OnTouchListener{
     private void onDown(int index,float x,float y){stick[index].setOrigin(x,y);}
 
     public Stick getStick(int index){return stick[index];};
+
+    public void draw(Canvas canvas)
+    {
+
+        Paint paint = new Paint();
+        paint.setColor(Color.CYAN);
+        paint.setAlpha(70);
+        canvas.drawCircle(stick[0].originX,stick[0].originY,stick[0].MAX_DIST, paint);
+        paint.setColor(Color.BLUE);
+        paint.setAlpha(70);
+        canvas.drawCircle(stick[0].originX+stick[0].fdx,stick[0].originY+stick[0].fdy,50, paint);
+        paint.setColor(Color.BLACK);
+        paint.setAlpha(70);
+        canvas.drawCircle(stick[0].originX,stick[0].originY,stick[0].MIN_DIST, paint);
+    }
 }

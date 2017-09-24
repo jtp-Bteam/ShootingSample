@@ -44,6 +44,7 @@ public class View extends SurfaceView {
     private ItemLogic itemLogic;
     private final Object lock;
     private Handler handler;
+    private Controller controller;
     Stick stick;
 
 
@@ -96,7 +97,7 @@ public class View extends SurfaceView {
         drawThread = new DrawThread();
         moveThread = new MoveThread();
 
-        Controller controller = new Controller();
+        controller = new Controller();
 
         stick = controller.getStick(0);
 
@@ -124,6 +125,7 @@ public class View extends SurfaceView {
             Canvas canvas = getHolder().lockCanvas();
             if (canvas == null) return;
             drawList.draw(canvas);
+            if(!(stick.originX == 0 && stick.originY == 0)) controller.draw(canvas);    //ここ消せばパッド表示だけ消えるよ
             getHolder().unlockCanvasAndPost(canvas); // 描画を終了
         }
     }
