@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
             } catch (InterruptedException e) {
             }
         }
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     @Override
