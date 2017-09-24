@@ -19,6 +19,7 @@ import jp.ac.dendai.c.jtp.shootingsample.mono.Haikei;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Anata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mikata;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Mono;
+import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpEffect;
 import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpMono;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Shootable;
 
@@ -192,6 +193,7 @@ public class View extends SurfaceView {
                 if(pum != null){
                     score.add(pum.getScore());
                     mikata.powerUp();
+                    effectList.add(new PowerUpEffect(context,mikata,false));
                     pum.dead();
                 }
 
