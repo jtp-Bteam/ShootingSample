@@ -18,9 +18,13 @@ public abstract class AbstractMono implements Mono {
     protected double period;
     protected Rect rect;
     protected boolean alive;
-    private int cycle;
-    private int clock;
-    private Bitmap[] gazou;
+    protected int cycle;
+    protected int clock;
+    protected Bitmap[] gazou;
+    protected boolean muteki;
+    protected int mutekiTime = 100;
+    protected int counter;
+    protected int zanki = 3;
     public AbstractMono(Context context, int[] ids) {
         p = new Vect();
         dp = new Vect();
