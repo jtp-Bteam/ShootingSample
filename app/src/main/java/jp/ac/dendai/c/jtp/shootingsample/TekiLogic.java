@@ -21,13 +21,13 @@ public class TekiLogic {
     }
     private Mono createTeki() {
         if(rand.nextInt(20) == 0){
-            return new BossTeki(context, 0, 0);
+            return new BossTeki(context, (int)(rand.nextInt(1000)* DisplaySizeCheck.x), 0);
         }
         else if(rand.nextInt(10) == 0) {
-            return new RareTeki(context, rand.nextInt(1000), 30);
+            return new RareTeki(context, (int)(rand.nextInt(1000) * DisplaySizeCheck.x), 30);
         }
         else {
-            return new Teki(context, rand.nextInt(1000), 30);
+            return new Teki(context, (int)(rand.nextInt(1000) * DisplaySizeCheck.x), 30);
         }
     }
     public void step(double tstep, int width, int height) {

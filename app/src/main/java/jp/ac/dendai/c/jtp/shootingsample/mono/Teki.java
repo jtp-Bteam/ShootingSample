@@ -11,8 +11,8 @@ public class Teki extends AbstractMono {
     private static final int[] ids = {R.drawable.enemy1, R.drawable.enemy2,R.drawable.enemy3,R.drawable.enemy2};
     private int dpindex;
     Random rand = new Random();
-    private final int x = (int)(3 - (rand.nextInt(7)) * DisplaySizeCheck.x);
-    private final int y = (int)(5 - (rand.nextInt(3)) * DisplaySizeCheck.y);
+    private final int x = (int)((3 - (rand.nextInt(7))) * DisplaySizeCheck.x);
+    private final int y = (int)((5 - (rand.nextInt(3))) * DisplaySizeCheck.y);
     private Vect[] dps = {new Vect(x, y), new Vect(x, y)};
     private double dpcycle = 0;//200 + rand.nextInt(300); //500から1000の間にしてない
     private double dpcounter;
