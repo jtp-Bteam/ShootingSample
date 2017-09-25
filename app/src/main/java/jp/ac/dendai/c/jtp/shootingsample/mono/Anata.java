@@ -15,7 +15,7 @@ import jp.ac.dendai.c.jtp.shootingsample.R;
 import jp.ac.dendai.c.jtp.shootingsample.Sound;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public class Anata extends AbstractShooter implements Mikata {
-    private static final int[] ids = {R.drawable.anata};
+    private static final int[] ids = {R.drawable.player1,R.drawable.player2,R.drawable.player3,R.drawable.player2};
     private double shootperiod;
     private static final Vect tamadp = new Vect(0, -30);
     private double shoottic;
@@ -43,7 +43,6 @@ public class Anata extends AbstractShooter implements Mikata {
         else
         {
             Paint paint = new Paint();
-            paint.setAlpha(100);
             canvas.drawBitmap(gazou[clock], p.getIntX(), p.getIntY(), paint);
         }
     }
