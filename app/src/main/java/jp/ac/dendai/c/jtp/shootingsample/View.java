@@ -2,6 +2,7 @@ package jp.ac.dendai.c.jtp.shootingsample;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Handler;
@@ -159,18 +160,22 @@ public class View extends SurfaceView {
         public void run() {
             double previous = (double) System.currentTimeMillis();
             double now;
-            while (!shutdown) {
+            while (!shutdown || effectList.size()!=0) {
+                System.out.println("move");
                 Debug.append("tamasize", "" + tamaList.size());
-                synchronized (lock) {
-                    now = System.currentTimeMillis();
-                    double tstep = (now - previous) / tic;
-                    //    Debug.append("tstep",""+tstep);
-                    mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
-                    drawList.step(tstep, width, height);
-                    tekiLogic.step(tstep, width, height);
-                    itemLogic.step(tstep);
+                if(!shutdown)
+                {
+                    synchronized (lock) {
+                        now = System.currentTimeMillis();
+                        double tstep = (now - previous) / tic;
+                        //    Debug.append("tstep",""+tstep);
+                        mikata.add((int)(stick.fdx / 10 * DisplaySizeCheck.x), (int)(stick.fdy / 10 * DisplaySizeCheck.y));
+                        drawList.step(tstep, width, height);
+                        tekiLogic.step(tstep, width, height);
+                        itemLogic.step(tstep);
+                    }
+                    previous = now;
                 }
-                previous = now;
 
                 score.add(1);
                 for (Shootable s : tamaList) { //敵の死の判定
@@ -185,15 +190,20 @@ public class View extends SurfaceView {
                 synchronized (lock) {
                     drawList.update();
                 }
-                if (tekiList.atari(mikata.getRect()) != null && !mikata.isMuteki()) { //自分への衝突判定
+
+                if (tekiList.atari(mikata.getRect()) != null && !mikata.isMuteki() && !shutdown) { //自分への衝突判定
                     if(!mikata.hasZanki(handler))
                     {
                         drawList.stop();
                         shutdown = true;
-                        break;
+                        effectList.add(new Explosion(context,mikata.getRect().centerX(),mikata.getRect().centerY()));
+                        Sound.getInstance().playFromSoundPool(R.raw.bakuhatsu);
+                        mikata.add(1000,1000);
                     }
                     else
                     {
+                        Sound.getInstance().playFromSoundPool(R.raw.bakuhatsu);
+                        effectList.add(new Explosion(context,mikata.getRect().centerX(),mikata.getRect().centerY()));
                         mikata.startMuteki();
                     }
                 }
@@ -216,13 +226,13 @@ public class View extends SurfaceView {
                     shutdown = true;
                 }
             }
-            handler.post(new GameOver());
         }
     }
     class DrawThread extends Thread {
         @Override
         public void run() {
-            while (!shutdown) {
+            while (!shutdown || effectList.size()!=0) {
+                System.out.println("draw");
                 draw();
                 try {
                     sleep(10);
@@ -230,14 +240,17 @@ public class View extends SurfaceView {
                     shutdown = true;
                 }
             }
+            handler.post(new GameOver());
         }
     }
 
     class GameOver implements Runnable {    //ここにshutdownがtrueになったときの処理を書けば動くよ！
         @Override
         public void run() {
-            init();
-            start();
+            Intent intent  = new Intent(((Activity)context).getApplication(),ResultActivity.class);
+            intent.putExtra("Score",score.getScore());
+            context.startActivity(intent);
+            ((Activity)context).finish();
         }
     }
 }

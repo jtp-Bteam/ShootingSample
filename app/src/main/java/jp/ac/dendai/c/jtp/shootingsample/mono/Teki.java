@@ -21,6 +21,7 @@ public class Teki extends AbstractMono {
     }
     public Teki(Context context, int x, int y) {
         super(context, ids);
+        if(this.y==0) alive = false;
         set(x, y);
         dp.set(dps[0]);
         dpindex = 0;

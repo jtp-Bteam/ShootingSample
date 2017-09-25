@@ -47,7 +47,7 @@ public abstract class Effect{
             Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),getIDs()[index]);
             canvas.drawBitmap(bitmap,(mono.getRect().centerX()-bitmap.getWidth()/2)+offsetX,(mono.getRect().centerY()-bitmap.getHeight()/2)+offsetY,null);
         }
-
+        step();
     }
 
     public void step()
@@ -63,7 +63,6 @@ public abstract class Effect{
         }
         else if(loop) index = 0;
         else isAlive = false;
-
     }
 
     public boolean isAlive()
