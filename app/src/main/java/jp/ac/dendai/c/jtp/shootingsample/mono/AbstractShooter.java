@@ -16,7 +16,9 @@ public abstract class AbstractShooter extends AbstractMono implements Shooter {
     @Override
     public void shoot(Vect dp) {
         Shootable newtama = tama.getInstance();
-        newtama.init(p.front(tama.getRect()), dp);
+        Vect ve = p.front(tama.getRect());
+        ve.add(new Vect((getRect().centerX()-p.getX())/2,0));
+        newtama.init(ve, dp);
         list.add(newtama);
         Sound.getInstance().playFromSoundPool(R.raw.shot3);
     }

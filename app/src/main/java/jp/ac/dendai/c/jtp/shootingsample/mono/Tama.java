@@ -2,7 +2,7 @@ package jp.ac.dendai.c.jtp.shootingsample.mono;
 import android.content.Context;
 import jp.ac.dendai.c.jtp.shootingsample.R;
 public class Tama extends AbstractShootable {
-    private static final int[] ids = {R.drawable.tama1, R.drawable.tama2};
+    private static final int[] ids = {R.drawable.tama1, R.drawable.tama2,R.drawable.tama3,R.drawable.tama4,R.drawable.tama5,R.drawable.tama4,R.drawable.tama3,R.drawable.tama2};
     private Context context;
     public Tama(Context context) {
         super(context, ids);
