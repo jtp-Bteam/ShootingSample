@@ -5,7 +5,7 @@ import android.content.Context;
 import jp.ac.dendai.c.jtp.shootingsample.R;
 
 public class RapidShotItem extends AbstractPowerUpMono {
-    private static final int[] ids = {R.drawable.tama1, R.drawable.tama2};
+    private static final int[] ids = {R.drawable.item1, R.drawable.item2,R.drawable.item3,R.drawable.item4,R.drawable.item5};
     private Context context;
     public RapidShotItem(Context context) {
         super(context, ids);

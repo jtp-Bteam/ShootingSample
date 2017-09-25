@@ -8,7 +8,7 @@ import jp.ac.dendai.c.jtp.shootingsample.DisplaySizeCheck;
 import jp.ac.dendai.c.jtp.shootingsample.R;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 public class Teki extends AbstractMono {
-    private static final int[] ids = {R.drawable.teki1, R.drawable.teki2};
+    private static final int[] ids = {R.drawable.enemy1, R.drawable.enemy2,R.drawable.enemy3,R.drawable.enemy2};
     private int dpindex;
     Random rand = new Random();
     private final int x = (int)(3 - (rand.nextInt(7)) * DisplaySizeCheck.x);

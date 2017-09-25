@@ -43,6 +43,7 @@ public class Anata extends AbstractShooter implements Mikata {
         else
         {
             Paint paint = new Paint();
+            paint.setAlpha(120);
             canvas.drawBitmap(gazou[clock], p.getIntX(), p.getIntY(), paint);
         }
     }

@@ -12,7 +12,7 @@ import jp.ac.dendai.c.jtp.shootingsample.Vect;
 
 
 public class RareTeki extends AbstractMono{
-    private static final int[] ids = {R.drawable.hiragana_34_te, R.drawable.hiragana_12_ki};
+    private static final int[] ids = {R.drawable.rare1};
     private int dpindex;
     Random rand = new Random();
     private final int x = (int)(3 * DisplaySizeCheck.x);

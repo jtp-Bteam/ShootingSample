@@ -10,7 +10,7 @@ import jp.ac.dendai.c.jtp.shootingsample.Sound;
 import jp.ac.dendai.c.jtp.shootingsample.Vect;
 
 public class BossTeki extends AbstractMono {
-    private static final int[] ids = {R.drawable.message4_oyasumi, R.drawable.message4_oyasumi};
+    private static final int[] ids = {R.drawable.boss1, R.drawable.boss2,R.drawable.boss3,R.drawable.boss4,R.drawable.boss5,R.drawable.boss4,R.drawable.boss3,R.drawable.boss2};
     private int dpindex;
     Random rand = new Random();
     private final int x = 0;
