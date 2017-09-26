@@ -50,10 +50,10 @@ public class DrawList extends ArrayList<Mono> {
                 m.step(t, width, height);
             }
         }
-        for(Effect effect : effectList)
-        {
-            effect.step();
-        }
+//        for(Effect effect : effectList)
+//        {
+//            effect.step();
+//        }
     }
     public void stop() {
         for (Mono m : this) {

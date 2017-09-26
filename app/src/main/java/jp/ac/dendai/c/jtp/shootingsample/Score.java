@@ -24,4 +24,6 @@ public class Score {
     public void add(int point) {
         score += point;
     }
+
+    public int getScore(){return score;}
 }
