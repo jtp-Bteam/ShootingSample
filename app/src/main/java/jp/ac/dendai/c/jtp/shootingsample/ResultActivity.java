@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MotionEvent;
@@ -21,16 +22,39 @@ public class ResultActivity extends Activity {
         setScreenType();
         setContentView(R.layout.activity_result);
 
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "Valkyrie-BoldExtended.ttf");
+
         Intent intent = getIntent();
         int score = intent.getIntExtra("Score",0);
         TextView textView = (TextView)findViewById(R.id.textView2);
         if(textView == null) System.out.println("null");
         textView.setText("Score: " + score);
+        textView.setTypeface(typeface);
 
         SharedPreferences pref = getSharedPreferences("user_data", MODE_PRIVATE);
         int useId = pref.getInt("score", 0);
         TextView tv5 = (TextView)findViewById(R.id.textView5);
         tv5.setText("HighScore: " + useId);
+        tv5.setTypeface(typeface);
+
+        TextView tv7 = (TextView)findViewById(R.id.textView7);
+        typeface = Typeface.createFromAsset(getAssets(), "FenixStd.otf");
+        tv7.setTypeface(typeface);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        Sound.getInstance().init(this);
+        Sound.getInstance().playFromMediaPlayer(R.raw.madoka);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        //リリース
+        Sound.getInstance().soundRelease();
     }
 
     private void setScreenType() {

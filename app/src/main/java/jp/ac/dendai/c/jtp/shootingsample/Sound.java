@@ -28,8 +28,8 @@ public class Sound {
 //        mSoundId4 = mSoundPool.load(context, R.raw.decision4, 0);
     }
 
-    public void init(){
-        this.context = MainActivity.getInstance();
+    public void init(Context context){
+        this.context = context;//MainActivity.getInstance();
         mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         mSoundId1 = mSoundPool.load(context, R.raw.bakuhatsu, 0);
         mSoundId2 = mSoundPool.load(context, R.raw.shot3, 0);
@@ -48,8 +48,10 @@ public class Sound {
         else if(name == R.raw.bakuhatsubig) mSoundPool.play(mSoundId5, 1.0F, 1.0F, 1, 0, 1.0F);
     }
 
-    public void playFromMediaPlayer() {
-        mediaPlayer = MediaPlayer.create(context, R.raw.polp);
+    public void playFromMediaPlayer(int name) {
+        if(mediaPlayer != null) mediaPlayer.release();
+
+        mediaPlayer = MediaPlayer.create(context, name);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }

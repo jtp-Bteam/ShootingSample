@@ -17,7 +17,7 @@ public class Score {
     public void draw(Canvas canvas) {
         String sc = "000000000" + score;
         Typeface typeface;
-        typeface = FontUtility.getTypefaceFromAssets(MainActivity.getInstance(), "Valkyrie-Extended.ttf");
+        typeface = FontUtility.getTypefaceFromAssets(MainActivity.getInstance(), "Valkyrie-BoldExtended.ttf");
         paint.setTypeface(typeface);
         canvas.drawText(sc.substring(sc.length() - 10), 0, paint.getTextSize(), paint);
     }

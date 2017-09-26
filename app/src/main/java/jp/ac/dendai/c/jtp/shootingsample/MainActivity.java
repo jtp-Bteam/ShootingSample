@@ -42,9 +42,8 @@ public class MainActivity extends Activity {
         super.onResume();
         setScreenType();
         view.start();
-        //sound = Sound.getInstance();
-        Sound.getInstance().init();
-        Sound.getInstance().playFromMediaPlayer();
+        Sound.getInstance().init(this);
+        Sound.getInstance().playFromMediaPlayer(R.raw.polp);
     }
     @Override
     public void onPause(){

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -25,8 +26,28 @@ public class LaunchActivity extends Activity {
         SharedPreferences pref = getSharedPreferences("user_data", MODE_PRIVATE);
         int useId = pref.getInt("score", 0);
 
-        TextView tv = (TextView)findViewById(R.id.textView4);
-        tv.setText("HighScore: " + useId);
+        TextView tv = (TextView)findViewById(R.id.textView);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "FenixStd.otf");
+        tv.setTypeface(typeface);
+
+        TextView tv4 = (TextView)findViewById(R.id.textView4);
+        tv4.setText("HighScore: " + useId);
+        typeface = Typeface.createFromAsset(getAssets(), "Valkyrie-BoldExtended.ttf");
+        tv4.setTypeface(typeface);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Sound.getInstance().init(this);
+        Sound.getInstance().playFromMediaPlayer(R.raw.keep);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        //リリース
+        Sound.getInstance().soundRelease();
     }
 
     private void setScreenType() {
