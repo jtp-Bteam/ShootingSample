@@ -250,9 +250,11 @@ public class View extends SurfaceView {
         @Override
         public void run() {
             SharedPreferences pref = context.getSharedPreferences("user_data", MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putInt("score", score.getScore());
-            editor.commit();
+            if(score.getScore() > pref.getInt("score", 0)){
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("score", score.getScore());
+                editor.commit();
+            }
             Intent intent  = new Intent(((Activity)context).getApplication(),ResultActivity.class);
             intent.putExtra("Score",score.getScore());
             context.startActivity(intent);
