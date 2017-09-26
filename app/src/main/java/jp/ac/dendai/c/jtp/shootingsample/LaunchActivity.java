@@ -2,11 +2,13 @@ package jp.ac.dendai.c.jtp.shootingsample;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 /**
  * Created by PCUser on 2017/09/25.
@@ -19,6 +21,12 @@ public class LaunchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setScreenType();
         setContentView(R.layout.activity_launch);
+
+        SharedPreferences pref = getSharedPreferences("user_data", MODE_PRIVATE);
+        int useId = pref.getInt("score", 0);
+
+        TextView tv = (TextView)findViewById(R.id.textView4);
+        tv.setText("HighScore: " + useId);
     }
 
     private void setScreenType() {

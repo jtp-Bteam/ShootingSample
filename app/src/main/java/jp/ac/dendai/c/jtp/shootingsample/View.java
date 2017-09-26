@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpEffect;
 import jp.ac.dendai.c.jtp.shootingsample.mono.PowerUpMono;
 import jp.ac.dendai.c.jtp.shootingsample.mono.Shootable;
 
+import static android.content.Context.MODE_PRIVATE;
 import static java.lang.Thread.sleep;
 
 public class View extends SurfaceView {
@@ -247,6 +249,10 @@ public class View extends SurfaceView {
     class GameOver implements Runnable {    //ここにshutdownがtrueになったときの処理を書けば動くよ！
         @Override
         public void run() {
+            SharedPreferences pref = context.getSharedPreferences("user_data", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt("score", score.getScore());
+            editor.commit();
             Intent intent  = new Intent(((Activity)context).getApplication(),ResultActivity.class);
             intent.putExtra("Score",score.getScore());
             context.startActivity(intent);

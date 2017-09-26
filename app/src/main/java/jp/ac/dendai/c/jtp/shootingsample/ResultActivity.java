@@ -2,6 +2,7 @@ package jp.ac.dendai.c.jtp.shootingsample;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +25,12 @@ public class ResultActivity extends Activity {
         int score = intent.getIntExtra("Score",0);
         TextView textView = (TextView)findViewById(R.id.textView2);
         if(textView == null) System.out.println("null");
-        textView.setText(score+"");
+        textView.setText("Score: " + score);
+
+        SharedPreferences pref = getSharedPreferences("user_data", MODE_PRIVATE);
+        int useId = pref.getInt("score", 0);
+        TextView tv5 = (TextView)findViewById(R.id.textView5);
+        tv5.setText("HighScore: " + useId);
     }
 
     private void setScreenType() {
@@ -38,9 +44,9 @@ public class ResultActivity extends Activity {
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN)
         {
-            Intent intent = new Intent(getApplication(),MainActivity.class);
+            //Intent intent = new Intent(getApplication(),MainActivity.class);
+            Intent intent = new Intent(getApplication(),LaunchActivity.class);
             startActivity(intent);
-
         }
         return super.onTouchEvent(event);
 
